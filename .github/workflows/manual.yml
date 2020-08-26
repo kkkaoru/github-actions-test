@@ -1,4 +1,4 @@
-name: DeployCI
+name: ManualDeployCI
 
 on: [ workflow_dispatch ]
 

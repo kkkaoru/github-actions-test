@@ -1,11 +1,17 @@
 name: ManualDeployCI
 
-on: [ workflow_dispatch ]
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "master"
 
 jobs:
   build:
     name: Run Deploy
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Run hello
         run: ./hello.sh

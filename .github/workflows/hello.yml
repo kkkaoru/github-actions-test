@@ -1,4 +1,4 @@
-name: ManualDeployCI
+name: HelloCI
 
 on:
   workflow_dispatch:

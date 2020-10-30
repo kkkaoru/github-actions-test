@@ -18,4 +18,4 @@ jobs:
         with:
           ruby-version: 2.7
       - name: Dump ruby version
-        run: ./dump-ruby-version.sh
+        run: ruby --version

@@ -1,0 +1,21 @@
+name: HelloCI
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  build:
+    name: Dump ruby version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7.1
+      - name: Dump ruby version
+        run: ./dump-ruby-version.sh

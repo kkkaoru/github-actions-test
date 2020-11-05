@@ -1,4 +1,4 @@
-name: Dump ruby version
+name: Dump node version
 
 on:
   workflow_dispatch:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Dump ruby version
+    name: Dump node version
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

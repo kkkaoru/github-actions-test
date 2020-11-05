@@ -17,4 +17,5 @@ jobs:
         uses: actions/setup-node@v2-beta
         with:
           node-version: '12.18.4'
+      - name: Dump node version
         run: node --version

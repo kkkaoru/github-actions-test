@@ -16,6 +16,6 @@ jobs:
       - name: Set up ruby
         uses: actions/setup-ruby@v1
         with:
-          ruby-version: 2.7.1
+          ruby-version: 2.7
       - name: Dump ruby version
         run: ruby --version

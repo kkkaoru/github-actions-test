@@ -1,0 +1,17 @@
+name: Dump ruby version
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  build:
+    name: Dump ruby version
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Dump node version
+        run: node --version

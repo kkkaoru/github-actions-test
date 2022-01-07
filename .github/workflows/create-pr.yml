@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        branch: ['master']
+        branch: ['main']
     steps:
       - uses: actions/checkout@v2
         with:
@@ -39,6 +39,4 @@ jobs:
               repo: context.repo.repo,
               title: `Pull request ${process.env.BRANCH_NAME} v${process.env.TAG_VERSION}`,
               body: `Example body \n ${process.env.DIFF_TEXT}`,
-              head: `${process.env.BRANCH_NAME}-v${process.env.TAG_VERSION}`,
-              base: ${{ matrix.branch }}
             })

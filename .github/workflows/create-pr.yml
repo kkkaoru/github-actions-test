@@ -39,6 +39,6 @@ jobs:
               repo: context.repo.repo,
               title: `Pull request ${process.env.BRANCH_NAME} v${process.env.TAG_VERSION}`,
               body: `Example body \n ${process.env.DIFF_TEXT}`,
-              head: `${process.env.BRANCH_NAME}-v${process.env.TAG_VERSION}`,
-              base: example
+              head: `${process.env.BRANCH_NAME}`,
+              base: master
             })

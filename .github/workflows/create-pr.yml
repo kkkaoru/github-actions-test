@@ -25,6 +25,12 @@ jobs:
         env:
           BRANCH_NAME: ${{ steps.get_branch.outputs.PR_BRANCH_NAME }}
           TAG_VERSION: ${{ steps.get_tag.outputs.PR_TAG_VERSION }}
+      - name: Debug Envs
+        run: echo ${BRANCH_NAME} && echo ${BRANCH_NAME} && echo ${DIFF_TEXT}
+        env:
+          BRANCH_NAME: ${{ steps.get_branch.outputs.PR_BRANCH_NAME }}
+          TAG_VERSION: ${{ steps.get_tag.outputs.PR_TAG_VERSION }}
+          DIFF_TEXT: ${{ steps.get_diff.outputs.PR_DIFF_TEXT }}
       - name: Create a pull request
         uses: actions/github-script@v5
         env:
@@ -37,6 +43,8 @@ jobs:
             github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `Pull request ${process.env.BRANCH_NAME} v${process.env.TAG_VERSION}`,
+              title: `Pull request`,
               body: `Example body \n ${process.env.DIFF_TEXT}`,
+              head: 'kkkaoru:test-create-pr',
+              base: 'main'
             })

@@ -1,0 +1,44 @@
+name: Create Pull Request
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        branch: ['master']
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Get branch name
+        id: get_branch
+        run: echo ::set-output name=PR_BRANCH_NAME::${GITHUB_HEAD_REF#refs/heads/}
+      - name: Get tag version
+        id: get_tag
+        run: echo ::set-output name=PR_TAG_VERSION::${GITHUB_REF/refs\/tags\/v/}
+      - name: Get diff
+        id: get_diff
+        run: echo ::set-output name=PR_DIFF_TEXT::`git --no-pager log ${BRANCH_NAME}..v${TAG_VERSION} --oneline`
+        env:
+          BRANCH_NAME: ${{ steps.get_branch.outputs.PR_BRANCH_NAME }}
+          TAG_VERSION: ${{ steps.get_tag.outputs.PR_TAG_VERSION }}
+      - name: Create a pull request
+        uses: actions/github-script@v5
+        env:
+          BRANCH_NAME: ${{ steps.get_branch.outputs.PR_BRANCH_NAME }}
+          TAG_VERSION: ${{ steps.get_tag.outputs.PR_TAG_VERSION }}
+          DIFF_TEXT: ${{ steps.get_diff.outputs.PR_DIFF_TEXT }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Pull request ${process.env.BRANCH_NAME} v${process.env.TAG_VERSION}`,
+              body: `Example body \n ${process.env.DIFF_TEXT}`,
+              head: `${process.env.BRANCH_NAME}-v${process.env.TAG_VERSION}`,
+              base: ${{ matrix.branch }}
+            })
